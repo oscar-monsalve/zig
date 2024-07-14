@@ -10,6 +10,7 @@
 // 2000 was a leap year!
 
 const std = @import("std");
+const stdout = std.io.getStdOut().writer();
 
 fn askUser() ![]u8 {
     const stdin = std.io.getStdIn().reader();
