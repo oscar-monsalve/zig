@@ -29,6 +29,6 @@ pub fn main() !void {
     const stdout = std.io.getStdOut().writer();
 
     const res = try askUser();
-    try stdout.print("You entered: {s}\n", .{res});
-    // std.debug.print("{any}", .{res}); // This printing method does not print correctly the string
+    try stdout.print("You entered: {s}\n", .{res}); // If "\n" is not written, you get weird outputs
+    // std.debug.print("You entered: {s}", .{res}); // This printing method does not print correctly the string
 }
