@@ -13,7 +13,7 @@ const std = @import("std");
 
 fn askUser() ![]u8 {
     const stdin = std.io.getStdIn().reader();
-    var buffer: [1024]u8 = undefined;
+    var buffer: [2048]u8 = undefined;
 
     std.debug.print("What is your name?: ", .{});
 
@@ -26,6 +26,9 @@ fn askUser() ![]u8 {
 }
 
 pub fn main() !void {
+    const stdout = std.io.getStdOut().writer();
+
     const res = try askUser();
-    std.debug.print("{s}", .{res});
+    try stdout.print("You entered: {s}\n", .{res});
+    // std.debug.print("{any}", .{res}); // This printing method does not print correctly the string
 }
