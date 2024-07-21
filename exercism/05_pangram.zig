@@ -10,3 +10,35 @@
 
 const std = @import("std");
 const testing = std.testing;
+
+pub fn charInString(ch: u8, str: []const u8) bool {
+    for (str) |i| {
+        if (i == ch) {
+            return true;
+        }
+    }
+    return false;
+}
+
+pub fn isPangram(str: []const u8) bool {
+    const allLetters = "abcdefghijklmnopqrstuvwxyz";
+
+    for (str) |i| {
+        if (charInString(i, allLetters)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+pub fn main() void {
+    const arraySentence = [_][]const u8{
+        "abcdefghijklmnopqrstuvwxyz",
+        "oscar",
+    };
+
+    std.debug.print("Sentence, is pangram?:\n", .{});
+    for (arraySentence) |i| {
+        std.debug.print("{s}, {}\n", .{ i, isPangram(i) });
+    }
+}
