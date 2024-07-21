@@ -26,15 +26,74 @@
 //
 // Later exercises will usually omit explicit instructions like this. In general, Exercism expects you to read the
 // test file when implementing your solution.
+//
+// Please implement the `ComputationError.IllegalArgument` error.
 
 const std = @import("std");
 const testing = std.testing;
 
-// Please implement the `ComputationError.IllegalArgument` error.
+pub const ComputationError = error{
+    IllegalArgument,
+};
 
-pub fn steps(number: usize) anyerror!usize {
-    _ = number;
-    @compileError("please implement the steps function");
+pub fn steps(number: usize) ComputationError!usize {
+    if (number == 0) {
+        return ComputationError.IllegalArgument;
+    }
+
+    var sequence: usize = number;
+    var index: usize = 0;
+
+    while (sequence != 1) : (index += 1) {
+        if (sequence % 2 == 0) {
+            sequence = sequence / 2;
+        } else {
+            sequence = sequence * 3 + 1;
+        }
+        // std.debug.print("{}. {}\n", .{ index, sequence });
+    }
+    //std.debug.print("\n", .{});
+    return index;
 }
 
-pub fn main() !void {}
+pub fn main() !void {
+    const res = steps(12) catch |err| {
+        if (err == ComputationError.IllegalArgument) {
+            std.debug.print("{}\n", .{err});
+            return;
+        } else {
+            return err;
+        }
+    };
+    std.debug.print("{}\n", .{res});
+}
+
+test "zero steps for one" {
+    const expected: usize = 0;
+    const actual = try steps(1);
+    try testing.expectEqual(expected, actual);
+}
+
+test "divide if even" {
+    const expected: usize = 4;
+    const actual = try steps(16);
+    try testing.expectEqual(expected, actual);
+}
+
+test "even and odd steps" {
+    const expected: usize = 9;
+    const actual = try steps(12);
+    try testing.expectEqual(expected, actual);
+}
+
+test "large number of even and add steps" {
+    const expected: usize = 152;
+    const actual = try steps(1_000_000);
+    try testing.expectEqual(expected, actual);
+}
+
+test "zero is an error" {
+    const expected = ComputationError.IllegalArgument;
+    const actual = steps(0);
+    try testing.expectError(expected, actual);
+}
