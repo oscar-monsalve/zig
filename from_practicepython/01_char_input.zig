@@ -38,6 +38,7 @@ fn askAge(alloc: *std.mem.Allocator) !usize {
     };
 
     if (maybeInput) |input| {
+        defer alloc.free(input);
         const age = std.fmt.parseInt(usize, input, 10) catch |err| {
             std.debug.print("Failed to parse integer: {}\n", .{err});
             return err;
@@ -62,6 +63,7 @@ fn askNumber(alloc: *std.mem.Allocator) !usize {
     };
 
     if (maybeInput) |input| {
+        defer alloc.free(input);
         const age = std.fmt.parseInt(usize, input, 10) catch |err| {
             std.debug.print("Failed to parse integer: {}\n", .{err});
             return err;
