@@ -59,7 +59,7 @@ pub fn main() !void {
     var digits = std.ArrayList(usize).init(allocator);
     defer digits.deinit();
 
-    const num = 154;
+    const num = 0;
 
     try appendDigits(num, &digits);
 
