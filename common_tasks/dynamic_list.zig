@@ -5,7 +5,7 @@ pub fn main() !void {
     var list = std.ArrayList(usize).init(alloc);
     defer list.deinit();
 
-    for (1..11) |value| {
+    for (1..100) |value| {
         try list.append(value);
     }
 
